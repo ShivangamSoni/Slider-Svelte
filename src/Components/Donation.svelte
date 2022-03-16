@@ -9,7 +9,6 @@
         value = parseInt(value);
         cost = Number.isNaN(value) ? previousCost : value;
         previousCost = cost;
-        calculateTip();
       },
     };
   };
