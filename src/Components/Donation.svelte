@@ -15,21 +15,11 @@
   };
 
   export let tip;
-  let tipValue = 0.0;
-  const calculateTip = () => {
-    tipValue = (cost / 100) * tip;
-  };
-  const tipUpdate = (node, value) => {
-    return {
-      update(value) {
-        calculateTip();
-      },
-    };
-  };
+  $: tipValue = (cost / 100) * tip;
+  // For Positioning of Range Fill & Tooltip Position
+  $: tip_fill = (tip / 5) * (100 / 6);
 
   let sliderSections = [1, 2, 3, 4, 5];
-
-  calculateTip();
 </script>
 
 <div class="container">
@@ -51,7 +41,7 @@
     <div class="slider">
       <div class="text-light">0%</div>
       <div class="slider-input">
-        <input type="range" min="0" max="30" step="5" bind:value={tip} use:tipUpdate={tip} />
+        <input type="range" min="0" max="30" step="5" bind:value={tip} />
 
         <div class="slider-sections">
           {#each sliderSections as section (section)}
@@ -59,10 +49,10 @@
           {/each}
         </div>
 
-        <div class="slider-fill" style={`width: ${(tip / 5) * (100 / 6)}%`} />
+        <div class="slider-fill" style={`width: ${tip_fill}%`} />
 
         <div class="slider-tooltip">
-          <span class="tooltip" style={`left: ${(tip / 5) * (100 / 6)}%`}>
+          <span class="tooltip" style={`left: ${tip_fill}%`}>
             {#if tipValue > 0}
               <span>${tipValue}</span>&nbsp;
             {/if}
